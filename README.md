@@ -51,106 +51,36 @@
 ## 🖥️ Screenshots
 
 ### 🏠 Main Shop — Dark Futuristic UI
-```
-┌─────────────────────────────────────────────────────┐
-│  MoodCommerce          😄 Happy  ●  🛒 3            │
-├─────────────────────────────────────────────────────┤
-│                                                     │
-│  You Feel It.        ┌──────────────────┐           │
-│  We Find It.         │   👤 SCANNING    │           │
-│                      │  ◯ ─ ─ ─ ─ ◯   │           │
-│  [Scan My Mood]      │  Emotion Scanner  │           │
-│  [How It Works]      └──────────────────┘           │
-│                                                     │
-├─────────────────────────────────────────────────────┤
-│  6 Moods  |  2.4K+ Products  |  94% Accuracy        │
-└─────────────────────────────────────────────────────┘
-```
+
+<img width="1366" height="639" alt="image" src="https://github.com/user-attachments/assets/6e24b8e1-b21f-4dac-b787-7c2604976b9f" />
+
+
 
 ### 📊 Admin Panel — Rails Dashboard
-```
-┌──────────┬──────────────────────────────────────────┐
-│ 📊 Dash  │  Revenue: ₹2.4L  Orders: 48  Products:24 │
-│ 🛍 Prods │  ──────────────────────────────────────  │
-│ 📦 Orders│  Mood Analytics Chart                    │
-│ 😊 Moods │  😄75% 😌55% 😤40% 🥰65% 🤩85% 😔30%   │
-│ 👥 Users │                                          │
-│ 🌿 Eco   │  Recent Orders Table                     │
-└──────────┴──────────────────────────────────────────┘
-```
+
+<img width="1366" height="642" alt="image" src="https://github.com/user-attachments/assets/999fac75-2a2e-4664-81f7-21cbbc24e682" />
+
+
+
 
 ---
 
 ## 🔧 Tech Stack — All 6 Web Technologies
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                    MOODCOMMERCE ARCHITECTURE                 │
-├─────────────────────────────────────────────────────────────┤
-│                                                             │
-│  [Browser]                                                  │
-│     │                                                       │
-│     ├── HTML5 ──────── Structure & UI Design                │
-│     ├── JavaScript ─── DOM, Webcam, Cart, Mood Engine       │
-│     │                                                       │
-│  [Tomcat Server :8080]                                      │
-│     ├── Java Servlets ─ ProductServlet, OrderServlet        │
-│     ├── XML ─────────── products.xml (Product Database)     │
-│     └── JSP ─────────── Dynamic product pages              │
-│                                                             │
-│  [XAMPP Server :80]                                         │
-│     └── PHP ─────────── Auth, Sessions, Green Points        │
-│                                                             │
-│  [Admin Panel]                                              │
-│     └── Ruby on Rails ─ Product & Order Management         │
-│                                                             │
-└─────────────────────────────────────────────────────────────┘
-```
+
+<img width="5288" height="2360" alt="E-commerce Product Order-2026-04-06-042538" src="https://github.com/user-attachments/assets/d230dc02-03ef-459e-9ddc-05e27850e60f" />
+
 
 ---
 
 ## 📁 Project Structure
 
 ```
-MoodCommerce/
-│
-├── 📄 moodcommerce.html          # Main shop page (HTML + CSS)
-│
-├── 📁 js/
-│   └── 📄 cart.js                # JavaScript & DOM module
-│       ├── Webcam Module         # getUserMedia() camera access
-│       ├── MoodEngine Module     # Emotion detection & mapping
-│       ├── ProductGrid Module    # Dynamic product rendering
-│       ├── Cart Module           # Add/Remove/Total tracking
-│       └── UI Module             # Notifications & animations
-│
-├── 📁 WEB-INF/
-│   ├── 📄 web.xml                # Servlet deployment descriptor
-│   ├── 📁 xml/
-│   │   └── 📄 products.xml       # Product database (24 products)
-│   └── 📁 classes/
-│       └── 📁 com/moodcommerce/servlets/
-│           ├── 📄 ProductServlet.java  # Reads XML → returns JSON
-│           └── 📄 OrderServlet.java   # Saves orders → XML
-│
-├── 📁 jsp/
-│   ├── 📄 products.jsp           # Dynamic product listing page
-│   └── 📄 order-confirm.jsp      # Order confirmation page
-│
-├── 📁 php/
-│   ├── 📄 auth.php               # Backend auth engine
-│   ├── 📄 login.php              # Login/Register UI
-│   └── 📁 data/
-│       └── 📄 users.json         # User database (auto-created)
-│
-├── 📁 rails/
-│   ├── 📄 admin.html             # Admin dashboard UI
-│   └── 📄 Gemfile                # Rails dependencies
-│
-└── 📄 README.md                  # This file
+```
+<img width="1948" height="2864" alt="MOOD-COMMERCE - visual selection1" src="https://github.com/user-attachments/assets/3798eb6b-decc-4703-856f-1e1ddae3ca4c" />
+
 ```
 
----
 
 ## 🚀 Getting Started
 
@@ -272,7 +202,7 @@ Password: irfan123
 
 ## 👨‍💻 Author
 
-**IRFAN**
+**Fatima Zameer Gazge**
 - 🎓 Web Technologies Mini Project — 2026
 - 💼 Built with HTML · JavaScript · Java · JSP · PHP · Ruby on Rails
 
@@ -288,6 +218,7 @@ This project is open source and available under the [MIT License](LICENSE).
 
 ### ⭐ If you found this project interesting, please give it a star!
 
-*Built with ❤️ and lots of ☕ by IRFAN*
 
 </div>
+
+*Built With Passion*

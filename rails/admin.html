@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MoodCommerce — Admin Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Mono:wght@300;500&family=Fraunces:ital,wght@1,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root { --bg:#060810; --surface:#0d1117; --card:#111827; --border:#1f2937; --accent:#00f5c4; --accent2:#7c3aed; --text:#f0f4ff; --muted:#6b7280; --red:#ef4444; --green:#22c55e; --yellow:#facc15; }
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+    body { background:var(--bg); color:var(--text); font-family:'DM Mono',monospace; min-height:100vh; display:flex; }
+    body::after { content:''; position:fixed; inset:0; background-image:linear-gradient(rgba(0,245,196,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,245,196,0.02) 1px,transparent 1px); background-size:48px 48px; pointer-events:none; z-index:0; }
+
+    /* SIDEBAR */
+    .sidebar { width:240px; min-height:100vh; background:var(--surface); border-right:1px solid var(--border); display:flex; flex-direction:column; position:fixed; left:0; top:0; bottom:0; z-index:10; }
+    .sidebar-logo { padding:1.5rem; border-bottom:1px solid var(--border); }
+    .logo-text { font-family:'Fraunces',serif; font-style:italic; font-size:1.2rem; color:var(--accent); }
+    .logo-sub { font-size:0.55rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); margin-top:0.2rem; }
+
+    .sidebar-nav { flex:1; padding:1rem 0; }
+    .nav-section { font-size:0.55rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--muted); padding:0.8rem 1.5rem 0.4rem; }
+    .nav-item { display:flex; align-items:center; gap:0.8rem; padding:0.7rem 1.5rem; font-size:0.68rem; color:var(--muted); cursor:pointer; transition:all 0.2s; border-left:2px solid transparent; }
+    .nav-item:hover,.nav-item.active { color:var(--accent); border-left-color:var(--accent); background:rgba(0,245,196,0.05); }
+    .nav-icon { font-size:0.9rem; }
+
+    .sidebar-footer { padding:1rem 1.5rem; border-top:1px solid var(--border); font-size:0.6rem; color:var(--muted); }
+
+    /* MAIN */
+    .main { margin-left:240px; flex:1; position:relative; z-index:1; }
+
+    /* TOP BAR */
+    .topbar { padding:1rem 2rem; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; background:rgba(6,8,16,0.8); backdrop-filter:blur(10px); position:sticky; top:0; z-index:5; }
+    .topbar-title { font-family:'Syne',sans-serif; font-size:1.1rem; font-weight:700; }
+    .topbar-right { display:flex; align-items:center; gap:1rem; }
+    .admin-badge { font-size:0.6rem; letter-spacing:0.1em; text-transform:uppercase; padding:0.3rem 0.8rem; border:1px solid var(--accent); color:var(--accent); }
+    .back-btn { font-size:0.62rem; color:var(--muted); text-decoration:none; padding:0.3rem 0.8rem; border:1px solid var(--border); transition:all 0.2s; }
+    .back-btn:hover { color:var(--text); border-color:var(--text); }
+
+    /* CONTENT */
+    .content { padding:2rem; }
+
+    /* STATS GRID */
+    .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; margin-bottom:2rem; }
+    .stat-card { background:var(--card); border:1px solid var(--border); padding:1.5rem; position:relative; overflow:hidden; }
+    .stat-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--stat-color,var(--accent)); }
+    .stat-label { font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); margin-bottom:0.8rem; }
+    .stat-value { font-family:'Syne',sans-serif; font-size:2rem; font-weight:800; color:var(--stat-color,var(--accent)); letter-spacing:-0.02em; }
+    .stat-change { font-size:0.6rem; color:var(--muted); margin-top:0.3rem; }
+    .stat-change.up { color:var(--green); }
+    .stat-change.down { color:var(--red); }
+
+    /* SECTION */
+    .section { background:var(--card); border:1px solid var(--border); margin-bottom:1.5rem; }
+    .section-header { padding:1.2rem 1.5rem; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+    .section-title { font-family:'Syne',sans-serif; font-size:0.9rem; font-weight:700; }
+    .section-badge { font-size:0.58rem; letter-spacing:0.1em; padding:0.2rem 0.6rem; border:1px solid var(--border); color:var(--muted); }
+
+    /* TABLE */
+    .table { width:100%; border-collapse:collapse; }
+    .table th { font-size:0.58rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--muted); padding:0.8rem 1.5rem; text-align:left; border-bottom:1px solid var(--border); }
+    .table td { font-size:0.68rem; padding:0.8rem 1.5rem; border-bottom:1px solid var(--border); color:var(--text); }
+    .table tr:last-child td { border-bottom:none; }
+    .table tr:hover td { background:rgba(255,255,255,0.02); }
+
+    .badge { display:inline-block; padding:0.2rem 0.5rem; font-size:0.55rem; letter-spacing:0.08em; border-radius:2px; }
+    .badge-green { background:rgba(34,197,94,0.1); border:1px solid var(--green); color:var(--green); }
+    .badge-yellow { background:rgba(250,204,21,0.1); border:1px solid var(--yellow); color:var(--yellow); }
+    .badge-red { background:rgba(239,68,68,0.1); border:1px solid var(--red); color:var(--red); }
+    .badge-blue { background:rgba(96,165,250,0.1); border:1px solid #60a5fa; color:#60a5fa; }
+    .badge-purple { background:rgba(124,58,237,0.1); border:1px solid var(--accent2); color:var(--accent2); }
+
+    /* MOOD CHART */
+    .mood-chart { padding:1.5rem; display:grid; grid-template-columns:repeat(6,1fr); gap:1rem; }
+    .mood-bar-wrap { text-align:center; }
+    .mood-bar-label { font-size:0.6rem; color:var(--muted); margin-bottom:0.5rem; }
+    .mood-bar-track { height:80px; background:var(--surface); position:relative; display:flex; align-items:flex-end; justify-content:center; }
+    .mood-bar-fill { width:70%; transition:height 0.8s ease; }
+    .mood-bar-val { font-size:0.65rem; color:var(--accent); margin-top:0.4rem; font-family:'Syne',sans-serif; font-weight:700; }
+
+    /* ACTION BUTTONS */
+    .action-btn { background:none; border:1px solid var(--border); color:var(--muted); font-family:'DM Mono',monospace; font-size:0.6rem; padding:0.3rem 0.6rem; cursor:pointer; transition:all 0.2s; }
+    .action-btn:hover { border-color:var(--accent); color:var(--accent); }
+    .action-btn.danger:hover { border-color:var(--red); color:var(--red); }
+
+    /* ADD PRODUCT FORM */
+    .add-form { padding:1.5rem; display:none; border-top:1px solid var(--border); }
+    .add-form.show { display:block; }
+    .form-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1rem; margin-bottom:1rem; }
+    .form-group { display:flex; flex-direction:column; gap:0.4rem; }
+    .form-label { font-size:0.58rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); }
+    .form-input { background:var(--surface); border:1px solid var(--border); color:var(--text); font-family:'DM Mono',monospace; font-size:0.72rem; padding:0.6rem 0.8rem; outline:none; transition:border-color 0.2s; }
+    .form-input:focus { border-color:var(--accent); }
+    .form-select { background:var(--surface); border:1px solid var(--border); color:var(--text); font-family:'DM Mono',monospace; font-size:0.72rem; padding:0.6rem 0.8rem; outline:none; }
+    .btn-add { background:var(--accent); color:#000; font-family:'DM Mono',monospace; font-size:0.7rem; font-weight:500; letter-spacing:0.1em; text-transform:uppercase; padding:0.7rem 1.5rem; border:none; cursor:pointer; }
+
+    /* TWO COL */
+    .two-col { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; margin-bottom:1.5rem; }
+
+    @media(max-width:1100px) { .stats-grid{grid-template-columns:repeat(2,1fr);} .two-col{grid-template-columns:1fr;} }
+    @media(max-width:768px) { .sidebar{display:none;} .main{margin-left:0;} }
+  </style>
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-text">MoodCommerce</div>
+      <div class="logo-sub">Admin Panel · Rails</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section">Main</div>
+      <div class="nav-item active" onclick="showSection('dashboard')">
+        <span class="nav-icon">📊</span> Dashboard
+      </div>
+      <div class="nav-item" onclick="showSection('products')">
+        <span class="nav-icon">🛍️</span> Products
+      </div>
+      <div class="nav-item" onclick="showSection('orders')">
+        <span class="nav-icon">📦</span> Orders
+      </div>
+      <div class="nav-section">Analytics</div>
+      <div class="nav-item" onclick="showSection('moods')">
+        <span class="nav-icon">😊</span> Mood Analytics
+      </div>
+      <div class="nav-item" onclick="showSection('users')">
+        <span class="nav-icon">👥</span> Users
+      </div>
+      <div class="nav-section">Settings</div>
+      <div class="nav-item" onclick="showSection('eco')">
+        <span class="nav-icon">🌿</span> Eco Scores
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      Module 6 — Ruby on Rails ✓
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="pageTitle">📊 Dashboard</div>
+      <div class="topbar-right">
+        <div class="admin-badge">Admin</div>
+        <a href="../moodcommerce.html" class="back-btn">← Back to Shop</a>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- DASHBOARD SECTION -->
+      <div id="sec-dashboard">
+        <!-- Stats -->
+        <div class="stats-grid">
+          <div class="stat-card" style="--stat-color:#00f5c4">
+            <div class="stat-label">Total Revenue</div>
+            <div class="stat-value" id="totalRevenue">₹0</div>
+            <div class="stat-change up">↑ 12% this week</div>
+          </div>
+          <div class="stat-card" style="--stat-color:#7c3aed">
+            <div class="stat-label">Total Orders</div>
+            <div class="stat-value" id="totalOrders">0</div>
+            <div class="stat-change up">↑ 8 today</div>
+          </div>
+          <div class="stat-card" style="--stat-color:#facc15">
+            <div class="stat-label">Total Products</div>
+            <div class="stat-value" id="totalProducts">24</div>
+            <div class="stat-change">6 mood categories</div>
+          </div>
+          <div class="stat-card" style="--stat-color:#22c55e">
+            <div class="stat-label">Green Points Given</div>
+            <div class="stat-value" id="totalGreenPts">0</div>
+            <div class="stat-change up">↑ Eco impact rising</div>
+          </div>
+        </div>
+
+        <!-- Two Col -->
+        <div class="two-col">
+          <!-- Recent Orders -->
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">Recent Orders</div>
+              <div class="section-badge">Live</div>
+            </div>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Product</th>
+                  <th>Mood</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="recentOrders">
+                <tr><td colspan="5" style="color:var(--muted);text-align:center;padding:2rem">No orders yet</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Top Moods -->
+          <div class="section">
+            <div class="section-header">
+              <div class="section-title">Mood Purchase Analytics</div>
+              <div class="section-badge">This Week</div>
+            </div>
+            <div class="mood-chart">
+              <div class="mood-bar-wrap">
+                <div class="mood-bar-label">😄</div>
+                <div class="mood-bar-track"><div class="mood-bar-fill" style="height:75%;background:#facc15"></div></div>
+                <div class="mood-bar-val">75%</div>
+              </div>
+              <div class="mood-bar-wrap">
+                <div class="mood-bar-label">😌</div>
+                <div class="mood-bar-track"><div class="mood-bar-fill" style="height:55%;background:#60a5fa"></div></div>
+                <div class="mood-bar-val">55%</div>
+              </div>
+              <div class="mood-bar-wrap">
+                <div class="mood-bar-label">😤</div>
+                <div class="mood-bar-track"><div class="mood-bar-fill" style="height:40%;background:#f87171"></div></div>
+                <div class="mood-bar-val">40%</div>
+              </div>
+              <div class="mood-bar-wrap">
+                <div class="mood-bar-label">🥰</div>
+                <div class="mood-bar-track"><div class="mood-bar-fill" style="height:65%;background:#a78bfa"></div></div>
+                <div class="mood-bar-val">65%</div>
+              </div>
+              <div class="mood-bar-wrap">
+                <div class="mood-bar-label">🤩</div>
+                <div class="mood-bar-track"><div class="mood-bar-fill" style="height:85%;background:#fb923c"></div></div>
+                <div class="mood-bar-val">85%</div>
+              </div>
+              <div class="mood-bar-wrap">
+                <div class="mood-bar-label">😔</div>
+                <div class="mood-bar-track"><div class="mood-bar-fill" style="height:30%;background:#94a3b8"></div></div>
+                <div class="mood-bar-val">30%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRODUCTS SECTION -->
+      <div id="sec-products" style="display:none">
+        <div class="section">
+          <div class="section-header">
+            <div class="section-title">🛍️ Product Management</div>
+            <button class="action-btn" onclick="toggleAddForm()">+ Add Product</button>
+          </div>
+
+          <!-- Add Product Form -->
+          <div class="add-form" id="addForm">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Product Name</label>
+                <input type="text" class="form-input" id="pName" placeholder="Product name"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Category</label>
+                <input type="text" class="form-input" id="pCat" placeholder="Gaming, Food..."/>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Price (₹)</label>
+                <input type="number" class="form-input" id="pPrice" placeholder="1999"/>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Mood</label>
+                <select class="form-select" id="pMood">
+                  <option value="happy">😄 Happy</option>
+                  <option value="calm">😌 Calm</option>
+                  <option value="stressed">😤 Stressed</option>
+                  <option value="romantic">🥰 Romantic</option>
+                  <option value="excited">🤩 Excited</option>
+                  <option value="sad">😔 Sad</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Eco Score</label>
+                <select class="form-select" id="pEco">
+                  <option>A+</option><option>A</option>
+                  <option>B+</option><option>B</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Stock</label>
+                <input type="number" class="form-input" id="pStock" placeholder="50"/>
+              </div>
+            </div>
+            <button class="btn-add" onclick="addProduct()">Add Product →</button>
+          </div>
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th><th>Name</th><th>Category</th>
+                <th>Mood</th><th>Price</th><th>Eco</th>
+                <th>Stock</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="productsTable"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ORDERS SECTION -->
+      <div id="sec-orders" style="display:none">
+        <div class="section">
+          <div class="section-header">
+            <div class="section-title">📦 Order Management</div>
+            <div class="section-badge" id="orderCount">0 Orders</div>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Order ID</th><th>Product</th><th>Mood</th>
+                <th>Customer</th><th>Amount</th><th>Date</th><th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="ordersTable">
+              <tr><td colspan="7" style="color:var(--muted);text-align:center;padding:2rem">No orders yet</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- MOOD ANALYTICS SECTION -->
+      <div id="sec-moods" style="display:none">
+        <div class="stats-grid">
+          <div class="stat-card" style="--stat-color:#facc15">
+            <div class="stat-label">Top Mood</div>
+            <div class="stat-value">😄</div>
+            <div class="stat-change">Happy — 85 orders</div>
+          </div>
+          <div class="stat-card" style="--stat-color:#f87171">
+            <div class="stat-label">Impulse Buys</div>
+            <div class="stat-value">23</div>
+            <div class="stat-change down">Stressed + Sad moods</div>
+          </div>
+          <div class="stat-card" style="--stat-color:#00f5c4">
+            <div class="stat-label">Avg Order Value</div>
+            <div class="stat-value">₹2.4K</div>
+            <div class="stat-change up">↑ Excited mood highest</div>
+          </div>
+          <div class="stat-card" style="--stat-color:#a78bfa">
+            <div class="stat-label">Mood Scans Today</div>
+            <div class="stat-value">142</div>
+            <div class="stat-change up">↑ 18% vs yesterday</div>
+          </div>
+        </div>
+        <div class="section">
+          <div class="section-header">
+            <div class="section-title">😊 Mood vs Revenue</div>
+          </div>
+          <table class="table">
+            <thead>
+              <tr><th>Mood</th><th>Orders</th><th>Revenue</th><th>Avg Order</th><th>Impulse Risk</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>😄 Happy</td><td>85</td><td>₹2,12,500</td><td>₹2,500</td><td><span class="badge badge-green">Low</span></td></tr>
+              <tr><td>😌 Calm</td><td>62</td><td>₹93,000</td><td>₹1,500</td><td><span class="badge badge-green">Low</span></td></tr>
+              <tr><td>😤 Stressed</td><td>45</td><td>₹1,12,500</td><td>₹2,500</td><td><span class="badge badge-red">High</span></td></tr>
+              <tr><td>🥰 Romantic</td><td>71</td><td>₹2,13,000</td><td>₹3,000</td><td><span class="badge badge-yellow">Medium</span></td></tr>
+              <tr><td>🤩 Excited</td><td>93</td><td>₹3,72,000</td><td>₹4,000</td><td><span class="badge badge-yellow">Medium</span></td></tr>
+              <tr><td>😔 Sad</td><td>31</td><td>₹46,500</td><td>₹1,500</td><td><span class="badge badge-red">High</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- USERS SECTION -->
+      <div id="sec-users" style="display:none">
+        <div class="section">
+          <div class="section-header">
+            <div class="section-title">👥 User Management</div>
+            <div class="section-badge">PHP Session Users</div>
+          </div>
+          <table class="table">
+            <thead>
+              <tr><th>ID</th><th>Name</th><th>Email</th><th>Green Pts</th><th>Join Date</th><th>Status</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>IRFAN</td>
+                <td>irfan@moodcommerce.com</td>
+                <td style="color:var(--accent)">150 🌿</td>
+                <td>2026-04-01</td>
+                <td><span class="badge badge-green">Active</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- ECO SECTION -->
+      <div id="sec-eco" style="display:none">
+        <div class="section">
+          <div class="section-header">
+            <div class="section-title">🌿 Eco Score Management</div>
+          </div>
+          <table class="table">
+            <thead>
+              <tr><th>Grade</th><th>Products</th><th>Carbon Range</th><th>Green Points</th><th>Description</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="badge badge-green">A+</span></td><td>8</td><td>0.0 — 0.2 kg</td><td style="color:var(--accent)">20 pts</td><td>Zero waste, fully sustainable</td></tr>
+              <tr><td><span class="badge badge-green">A</span></td><td>7</td><td>0.2 — 0.5 kg</td><td style="color:var(--accent)">15 pts</td><td>Eco-friendly materials</td></tr>
+              <tr><td><span class="badge badge-yellow">B+</span></td><td>5</td><td>0.5 — 0.7 kg</td><td style="color:var(--accent)">10 pts</td><td>Partially sustainable</td></tr>
+              <tr><td><span class="badge badge-red">B</span></td><td>4</td><td>0.7 — 1.2 kg</td><td style="color:var(--accent)">5 pts</td><td>Standard production</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // ── Products Data ─────────────────────────────────────────
+    const products = [
+      {id:"h1",name:"Pro Controller X1",cat:"Gaming",mood:"happy",price:3499,eco:"A+",stock:25},
+      {id:"h2",name:"Party Buds Max",cat:"Audio",mood:"happy",price:1999,eco:"B",stock:40},
+      {id:"h3",name:"Neon Kicks 2.0",cat:"Fashion",mood:"happy",price:5299,eco:"A",stock:15},
+      {id:"h4",name:"Happy Juice Bundle",cat:"Food",mood:"happy",price:799,eco:"A+",stock:100},
+      {id:"c1",name:"Aura Candle Set",cat:"Wellness",mood:"calm",price:899,eco:"A+",stock:60},
+      {id:"c2",name:"Mindful Living Vol.2",cat:"Books",mood:"calm",price:449,eco:"A+",stock:80},
+      {id:"c3",name:"Zen Yoga Mat Pro",cat:"Fitness",mood:"calm",price:1299,eco:"A",stock:30},
+      {id:"c4",name:"Calm Brew Tea Kit",cat:"Beverage",mood:"calm",price:649,eco:"A+",stock:75},
+      {id:"s1",name:"De-Stress Spa Kit",cat:"Self-Care",mood:"stressed",price:1499,eco:"A",stock:45},
+      {id:"s2",name:"Noise Cancel Pro",cat:"Audio",mood:"stressed",price:7999,eco:"B+",stock:20},
+      {id:"s3",name:"Dark Choco Relief Box",cat:"Food",mood:"stressed",price:599,eco:"A",stock:90},
+      {id:"s4",name:"Epsom Salt Bundle",cat:"Wellness",mood:"stressed",price:399,eco:"A+",stock:120},
+      {id:"r1",name:"Eternal Rose Box",cat:"Gift",mood:"romantic",price:2199,eco:"A",stock:35},
+      {id:"r2",name:"Silver Charm Set",cat:"Jewellery",mood:"romantic",price:3799,eco:"B+",stock:18},
+      {id:"r3",name:"Couple Candle Kit",cat:"Ambience",mood:"romantic",price:999,eco:"A+",stock:55},
+      {id:"r4",name:"Premium Wine Pairing",cat:"Beverage",mood:"romantic",price:1899,eco:"B",stock:22},
+      {id:"e1",name:"Drone Mini Explorer",cat:"Tech",mood:"excited",price:8999,eco:"B",stock:12},
+      {id:"e2",name:"Adventure Pass",cat:"Experience",mood:"excited",price:2499,eco:"A",stock:50},
+      {id:"e3",name:"Pre-Workout Blast",cat:"Energy",mood:"excited",price:1199,eco:"B+",stock:65},
+      {id:"e4",name:"VR Headset Lite",cat:"Gaming",mood:"excited",price:12999,eco:"B",stock:8},
+      {id:"d1",name:"Cozy Plush Bundle",cat:"Comfort",mood:"sad",price:1299,eco:"A",stock:42},
+      {id:"d2",name:"OTT 3-Month Pass",cat:"Entertainment",mood:"sad",price:699,eco:"A+",stock:999},
+      {id:"d3",name:"Comfort Food Box",cat:"Food",mood:"sad",price:899,eco:"B",stock:70},
+      {id:"d4",name:"Gratitude Journal",cat:"Wellness",mood:"sad",price:349,eco:"A+",stock:85},
+    ];
+
+    // ── Show Section ──────────────────────────────────────────
+    function showSection(name) {
+      document.querySelectorAll('[id^="sec-"]').forEach(s => s.style.display = 'none');
+      document.getElementById('sec-' + name).style.display = 'block';
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      event.currentTarget.classList.add('active');
+      const titles = { dashboard:'📊 Dashboard', products:'🛍️ Products', orders:'📦 Orders', moods:'😊 Mood Analytics', users:'👥 Users', eco:'🌿 Eco Scores' };
+      document.getElementById('pageTitle').textContent = titles[name];
+      if (name === 'products') renderProducts();
+    }
+
+    // ── Render Products ───────────────────────────────────────
+    function renderProducts() {
+      const tbody = document.getElementById('productsTable');
+      const moodColors = { happy:'badge-yellow', calm:'badge-blue', stressed:'badge-red', romantic:'badge-purple', excited:'badge-yellow', sad:'badge-blue' };
+      tbody.innerHTML = products.map(p => `
+        <tr>
+          <td style="color:var(--muted)">${p.id}</td>
+          <td>${p.name}</td>
+          <td>${p.cat}</td>
+          <td><span class="badge ${moodColors[p.mood]}">${p.mood}</span></td>
+          <td style="color:var(--accent)">₹${p.price.toLocaleString('en-IN')}</td>
+          <td><span class="badge ${p.eco==='A+'||p.eco==='A'?'badge-green':'badge-yellow'}">${p.eco}</span></td>
+          <td style="color:${p.stock<20?'var(--red)':'var(--text)'}">${p.stock}</td>
+          <td>
+            <button class="action-btn" onclick="editProduct('${p.id}')">Edit</button>
+            <button class="action-btn danger" onclick="deleteProduct('${p.id}')">Delete</button>
+          </td>
+        </tr>`).join('');
+      document.getElementById('totalProducts').textContent = products.length;
+    }
+
+    // ── Toggle Add Form ───────────────────────────────────────
+    function toggleAddForm() {
+      document.getElementById('addForm').classList.toggle('show');
+    }
+
+    // ── Add Product ───────────────────────────────────────────
+    function addProduct() {
+      const name  = document.getElementById('pName').value;
+      const cat   = document.getElementById('pCat').value;
+      const price = document.getElementById('pPrice').value;
+      const mood  = document.getElementById('pMood').value;
+      const eco   = document.getElementById('pEco').value;
+      const stock = document.getElementById('pStock').value;
+      if (!name || !price) { alert('Name and price required!'); return; }
+      const newId = mood[0] + (products.filter(p=>p.mood===mood).length+1);
+      products.push({ id:newId, name, cat, mood, price:parseInt(price), eco, stock:parseInt(stock) });
+      renderProducts();
+      document.getElementById('addForm').classList.remove('show');
+      alert('✅ Product added successfully!');
+    }
+
+    // ── Edit / Delete ─────────────────────────────────────────
+    function editProduct(id) { alert('Edit product: ' + id + '\n(Connect to Rails API in production)'); }
+    function deleteProduct(id) {
+      if(confirm('Delete product ' + id + '?')) {
+        const idx = products.findIndex(p => p.id === id);
+        if(idx > -1) { products.splice(idx, 1); renderProducts(); }
+      }
+    }
+
+    // ── Update Stats ──────────────────────────────────────────
+    function updateStats() {
+      const revenue = products.reduce((s,p) => s + p.price, 0);
+      document.getElementById('totalRevenue').textContent = '₹' + revenue.toLocaleString('en-IN');
+      document.getElementById('totalProducts').textContent = products.length;
+      document.getElementById('totalOrders').textContent = Math.floor(Math.random() * 50) + 10;
+      document.getElementById('totalGreenPts').textContent = Math.floor(Math.random() * 500) + 200;
+    }
+
+    // Init
+    updateStats();
+    renderProducts();
+  </script>
+
+</body>
+</html>

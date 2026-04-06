@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ============================================================
+     MoodCommerce — products.xml
+     Stores all product data mapped to mood categories
+     Used by: ProductServlet.java, OrderServlet.java
+     ============================================================ -->
+<moodcommerce>
+
+  <products>
+
+    <!-- ═══ HAPPY MOOD PRODUCTS ═══ -->
+    <product id="h1" mood="happy">
+      <name>Pro Controller X1</name>
+      <category>Gaming</category>
+      <price>3499</price>
+      <eco>A+</eco>
+      <carbon>0.3</carbon>
+      <stock>25</stock>
+      <emoji>🎮</emoji>
+      <description>Top-tier gaming controller with haptic feedback</description>
+    </product>
+
+    <product id="h2" mood="happy">
+      <name>Party Buds Max</name>
+      <category>Audio</category>
+      <price>1999</price>
+      <eco>B</eco>
+      <carbon>0.6</carbon>
+      <stock>40</stock>
+      <emoji>🎧</emoji>
+      <description>Wireless earbuds with deep bass for party vibes</description>
+    </product>
+
+    <product id="h3" mood="happy">
+      <name>Neon Kicks 2.0</name>
+      <category>Fashion</category>
+      <price>5299</price>
+      <eco>A</eco>
+      <carbon>0.5</carbon>
+      <stock>15</stock>
+      <emoji>👟</emoji>
+      <description>Glow-in-the-dark sneakers for the happy soul</description>
+    </product>
+
+    <product id="h4" mood="happy">
+      <name>Happy Juice Bundle</name>
+      <category>Food</category>
+      <price>799</price>
+      <eco>A+</eco>
+      <carbon>0.1</carbon>
+      <stock>100</stock>
+      <emoji>🧃</emoji>
+      <description>Natural fruit juice pack — 12 flavours</description>
+    </product>
+
+    <!-- ═══ CALM MOOD PRODUCTS ═══ -->
+    <product id="c1" mood="calm">
+      <name>Aura Candle Set</name>
+      <category>Wellness</category>
+      <price>899</price>
+      <eco>A+</eco>
+      <carbon>0.1</carbon>
+      <stock>60</stock>
+      <emoji>🕯️</emoji>
+      <description>Soy wax aromatherapy candles — lavender &amp; sandalwood</description>
+    </product>
+
+    <product id="c2" mood="calm">
+      <name>Mindful Living Vol.2</name>
+      <category>Books</category>
+      <price>449</price>
+      <eco>A+</eco>
+      <carbon>0.05</carbon>
+      <stock>80</stock>
+      <emoji>📖</emoji>
+      <description>Bestselling guide to mindful everyday living</description>
+    </product>
+
+    <product id="c3" mood="calm">
+      <name>Zen Yoga Mat Pro</name>
+      <category>Fitness</category>
+      <price>1299</price>
+      <eco>A</eco>
+      <carbon>0.4</carbon>
+      <stock>30</stock>
+      <emoji>🧘</emoji>
+      <description>Non-slip cork yoga mat with alignment guides</description>
+    </product>
+
+    <product id="c4" mood="calm">
+      <name>Calm Brew Tea Kit</name>
+      <category>Beverage</category>
+      <price>649</price>
+      <eco>A+</eco>
+      <carbon>0.1</carbon>
+      <stock>75</stock>
+      <emoji>🍵</emoji>
+      <description>Curated herbal tea collection for calm evenings</description>
+    </product>
+
+    <!-- ═══ STRESSED MOOD PRODUCTS ═══ -->
+    <product id="s1" mood="stressed">
+      <name>De-Stress Spa Kit</name>
+      <category>Self-Care</category>
+      <price>1499</price>
+      <eco>A</eco>
+      <carbon>0.3</carbon>
+      <stock>45</stock>
+      <emoji>💆</emoji>
+      <description>Complete at-home spa kit with bath bombs &amp; oils</description>
+    </product>
+
+    <product id="s2" mood="stressed">
+      <name>Noise Cancel Pro</name>
+      <category>Audio</category>
+      <price>7999</price>
+      <eco>B+</eco>
+      <carbon>0.7</carbon>
+      <stock>20</stock>
+      <emoji>🎵</emoji>
+      <description>40dB noise cancellation for instant peace</description>
+    </product>
+
+    <product id="s3" mood="stressed">
+      <name>Dark Choco Relief Box</name>
+      <category>Food</category>
+      <price>599</price>
+      <eco>A</eco>
+      <carbon>0.2</carbon>
+      <stock>90</stock>
+      <emoji>🍫</emoji>
+      <description>Premium dark chocolate assortment — stress buster</description>
+    </product>
+
+    <product id="s4" mood="stressed">
+      <name>Epsom Salt Bundle</name>
+      <category>Wellness</category>
+      <price>399</price>
+      <eco>A+</eco>
+      <carbon>0.1</carbon>
+      <stock>120</stock>
+      <emoji>🛁</emoji>
+      <description>Magnesium-rich bath salts for muscle relief</description>
+    </product>
+
+    <!-- ═══ ROMANTIC MOOD PRODUCTS ═══ -->
+    <product id="r1" mood="romantic">
+      <name>Eternal Rose Box</name>
+      <category>Gift</category>
+      <price>2199</price>
+      <eco>A</eco>
+      <carbon>0.4</carbon>
+      <stock>35</stock>
+      <emoji>🌹</emoji>
+      <description>Preserved roses in luxury velvet box — lasts 1 year</description>
+    </product>
+
+    <product id="r2" mood="romantic">
+      <name>Silver Charm Set</name>
+      <category>Jewellery</category>
+      <price>3799</price>
+      <eco>B+</eco>
+      <carbon>0.6</carbon>
+      <stock>18</stock>
+      <emoji>💍</emoji>
+      <description>925 silver bracelet with heart charm</description>
+    </product>
+
+    <product id="r3" mood="romantic">
+      <name>Couple Candle Kit</name>
+      <category>Ambience</category>
+      <price>999</price>
+      <eco>A+</eco>
+      <carbon>0.1</carbon>
+      <stock>55</stock>
+      <emoji>🕯️</emoji>
+      <description>Two-tone soy candles with rose &amp; oud fragrance</description>
+    </product>
+
+    <product id="r4" mood="romantic">
+      <name>Premium Wine Pairing</name>
+      <category>Beverage</category>
+      <price>1899</price>
+      <eco>B</eco>
+      <carbon>0.5</carbon>
+      <stock>22</stock>
+      <emoji>🍷</emoji>
+      <description>Curated red &amp; white wine duo for two</description>
+    </product>
+
+    <!-- ═══ EXCITED MOOD PRODUCTS ═══ -->
+    <product id="e1" mood="excited">
+      <name>Drone Mini Explorer</name>
+      <category>Tech</category>
+      <price>8999</price>
+      <eco>B</eco>
+      <carbon>0.9</carbon>
+      <stock>12</stock>
+      <emoji>🚀</emoji>
+      <description>4K camera drone with 30min flight time</description>
+    </product>
+
+    <product id="e2" mood="excited">
+      <name>Adventure Pass</name>
+      <category>Experience</category>
+      <price>2499</price>
+      <eco>A</eco>
+      <carbon>0.2</carbon>
+      <stock>50</stock>
+      <emoji>🎢</emoji>
+      <description>All-access pass to 5 adventure parks near you</description>
+    </product>
+
+    <product id="e3" mood="excited">
+      <name>Pre-Workout Blast</name>
+      <category>Energy</category>
+      <price>1199</price>
+      <eco>B+</eco>
+      <carbon>0.4</carbon>
+      <stock>65</stock>
+      <emoji>⚡</emoji>
+      <description>High-energy pre-workout formula — mango flavour</description>
+    </product>
+
+    <product id="e4" mood="excited">
+      <name>VR Headset Lite</name>
+      <category>Gaming</category>
+      <price>12999</price>
+      <eco>B</eco>
+      <carbon>1.1</carbon>
+      <stock>8</stock>
+      <emoji>🕹️</emoji>
+      <description>Standalone VR headset with 50+ games included</description>
+    </product>
+
+    <!-- ═══ SAD MOOD PRODUCTS ═══ -->
+    <product id="d1" mood="sad">
+      <name>Cozy Plush Bundle</name>
+      <category>Comfort</category>
+      <price>1299</price>
+      <eco>A</eco>
+      <carbon>0.3</carbon>
+      <stock>42</stock>
+      <emoji>🧸</emoji>
+      <description>Ultra-soft plush toy + blanket comfort set</description>
+    </product>
+
+    <product id="d2" mood="sad">
+      <name>OTT 3-Month Pass</name>
+      <category>Entertainment</category>
+      <price>699</price>
+      <eco>A+</eco>
+      <carbon>0.05</carbon>
+      <stock>999</stock>
+      <emoji>🎬</emoji>
+      <description>3 months of unlimited movies &amp; shows</description>
+    </product>
+
+    <product id="d3" mood="sad">
+      <name>Comfort Food Box</name>
+      <category>Food</category>
+      <price>899</price>
+      <eco>B</eco>
+      <carbon>0.6</carbon>
+      <stock>70</stock>
+      <emoji>🍕</emoji>
+      <description>Curated snack box — chips, chocolates &amp; more</description>
+    </product>
+
+    <product id="d4" mood="sad">
+      <name>Gratitude Journal</name>
+      <category>Wellness</category>
+      <price>349</price>
+      <eco>A+</eco>
+      <carbon>0.05</carbon>
+      <stock>85</stock>
+      <emoji>📔</emoji>
+      <description>Guided 90-day gratitude &amp; mood journal</description>
+    </product>
+
+  </products>
+
+  <!-- ═══ ORDERS (written by OrderServlet) ═══ -->
+  <orders>
+    <!-- Orders will be appended here by OrderServlet.java -->
+  </orders>
+
+</moodcommerce>

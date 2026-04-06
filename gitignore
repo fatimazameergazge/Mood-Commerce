@@ -1,0 +1,44 @@
+# MoodCommerce — .gitignore
+
+# Java compiled files
+*.class
+*.jar
+*.war
+*.ear
+
+# PHP data files (user data — don't upload)
+php/data/users.json
+php/data/sessions.json
+
+# Tomcat work files
+work/
+temp/
+logs/
+
+# VS Code settings
+.vscode/
+*.code-workspace
+
+# Windows files
+Thumbs.db
+desktop.ini
+*.lnk
+
+# Mac files
+.DS_Store
+.AppleDouble
+
+# Node modules (if any)
+node_modules/
+
+# Environment files
+.env
+*.env.local
+
+# Backup files
+*.bak
+*.backup
+*.tmp
+
+# Log files
+*.log

@@ -85,15 +85,10 @@
 ## 🚀 Getting Started
 
 ### Prerequisites
+```
+<img width="3074" height="1730" alt="Prerequisites" src="https://github.com/user-attachments/assets/81d892b5-ea9b-46e9-b849-bab1ae5ce7b4" />
 
-| Software | Version | Download |
-|---|---|---|
-| JDK | 17+ | [adoptium.net](https://adoptium.net) |
-| Apache Tomcat | 9.x | [tomcat.apache.org](https://tomcat.apache.org) |
-| XAMPP | Latest | [apachefriends.org](https://apachefriends.org) |
-| VS Code | Latest | [code.visualstudio.com](https://code.visualstudio.com) |
-
----
+```
 
 ### ▶️ Running the Project
 
@@ -155,25 +150,17 @@ Password: irfan123
 
 ## 💰 Business Potential
 
-```
-💼 Target Buyers:
-   → E-commerce giants (Amazon, Flipkart, Myntra)
-   → Retail chains for smart kiosks
-   → Mental wellness brands
-   → Advertising & marketing firms
+### 💼 Target Buyers
 
-💵 Monetization Models:
-   → License the mood engine as SaaS API
-   → Sell anonymized mood-shopping insights
-   → White-label for retail brands
-   → Subscription mood boxes
+<img width="2642" height="1804" alt="Target Buyers" src="https://github.com/user-attachments/assets/11d27969-7522-40d2-8018-a1853816ddd8" />
 
-📈 Market Size:
-   → Emotion AI market: $37 Billion by 2026
-   → E-commerce market: $6.3 Trillion globally
-```
+### 💵 Monetization Models
 
----
+<img width="2124" height="1384" alt="Monetization Models" src="https://github.com/user-attachments/assets/f0311504-40fb-4911-87f8-2262581f579d" />
+
+### 📈 Market Size
+
+<img width="1108" height="1533" alt="Market Size" src="https://github.com/user-attachments/assets/bb39504b-0e46-4a2a-9bd9-5de7c4b98c1f" />
 
 ## 📊 Module Breakdown
 

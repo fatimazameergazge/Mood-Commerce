@@ -82,7 +82,11 @@
 ```
 
 
+---
+
 ## 🚀 Getting Started
+
+---
 
 ### Prerequisites
 ```
@@ -90,13 +94,20 @@
 
 ```
 
+---
+
+
 ### ▶️ Running the Project
+
+---
 
 #### 1️⃣ Start Tomcat (Java + JSP)
 ```bash
 cd path/to/apache-tomcat/bin
 startup.bat
 ```
+
+---
 
 #### 2️⃣ Start XAMPP (PHP)
 ```
